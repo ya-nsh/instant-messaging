@@ -1,9 +1,11 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const { chats } = require('./data/data');
+const connectDB = require('./config/db');
 
 const app = express();
 dotenv.config(); // Loads environment variables from .env file
+connectDB(); // Connects to MongoDB
 
 const port = process.env.PORT || 5000;
 
