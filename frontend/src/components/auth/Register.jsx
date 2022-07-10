@@ -15,7 +15,6 @@ function Register() {
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
-    e.preventDefault();
     setPicLoading(true);
     if (!name || !email || !password || !passwordConfirmation) {
       toast({
