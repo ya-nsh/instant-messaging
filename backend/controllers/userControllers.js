@@ -49,7 +49,7 @@ const authUser = asyncHandler(async (req, res) => {
     throw new Error('User does not exist');
   }
 
-  if (user) {
+  if (user && (await user.comparePassword(password))) {
     res.status(200).json({
       _id: user._id,
       name: user.name,
@@ -64,4 +64,4 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser };
+module.exports = { registerUser, authUser };
