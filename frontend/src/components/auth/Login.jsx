@@ -100,14 +100,14 @@ function Login() {
           </div>
         </form>
         <button
-          className="flex mt-10 items-center justify-center px-8 p-4 font-bold transition bg-pink-100 border-4 border-black rounded-xl focus:outline-none focus:ring   hover:shadow-xl hover:ring-xl hover:scale-110 "
+          className="flex mt-10 items-center justify-center px-8 p-4 font-bold transition bg-white border-4 border-black rounded-xl focus:outline-none focus:ring   hover:shadow-xl hover:ring-xl hover:scale-110 "
           type="submit"
           onClick={handleSubmit}
         >
           Login
         </button>
         <button
-          className="mt-10 p-4 inline-block px-4 text-black transition bg-white hover:scale-110 font-bold hover:shadow-xl rounded-xl active:bg-indigo-500 border-4 border-black focus:outline-none focus:ring"
+          className="mt-10 p-4 inline-block px-4 text-black transition bg-white hover:scale-110 font-bold hover:shadow-xl rounded-xl border-4 border-black focus:outline-0 focus:ring active:bg-black active:text-white active:outline-0"
           onClick={handleGuest}
         >
           Guest User

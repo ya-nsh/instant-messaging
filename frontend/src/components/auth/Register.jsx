@@ -174,7 +174,7 @@ function Register() {
           </div>
         </form>
         <button
-          className="flex mt-10 items-center justify-center px-8 py-4 font-bold transition bg-pink-100 border-4 border-black rounded-xl focus:outline-none focus:ring shadow-[6px_6px_0_0_#000] hover:shadow-none active:bg-pink-300"
+          className="flex mt-10 items-center justify-center px-8 py-4 font-bold transition bg-white border-4 border-black rounded-xl focus:outline-none focus:ring shadow-[6px_6px_0_0_#000] hover:shadow-none active:bg-pink-200"
           type="submit"
           onClick={handleSubmit}
         >
