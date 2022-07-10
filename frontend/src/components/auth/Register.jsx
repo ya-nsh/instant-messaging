@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useToast } from '@chakra-ui/toast';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [name, setName] = useState('');
@@ -7,13 +10,120 @@ function Register() {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [profilePic, setProfilePic] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [picLoading, setPicLoading] = useState(false);
+  const toast = useToast();
+  const navigate = useNavigate();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log(name, email, password, passwordConfirmation, profilePic);
+    setPicLoading(true);
+    if (!name || !email || !password || !passwordConfirmation) {
+      toast({
+        title: 'Please fill the fields',
+        status: 'warning',
+        duration: 2500,
+        isClosable: true,
+        position: 'top'
+      });
+      setPicLoading(false);
+      return;
+    }
+    if (password !== passwordConfirmation) {
+      toast({
+        title: 'The Passwords Do Not Match',
+        status: 'warning',
+        duration: 2500,
+        isClosable: true,
+        position: 'top'
+      });
+      return;
+    }
+    try {
+      const config = {
+        headers: {
+          'Content-type': 'application/json'
+        }
+      };
+      const { data } = await axios.post(
+        '/api/user',
+        {
+          name,
+          email,
+          password,
+          profilePic
+        },
+        config
+      );
+      console.log(data);
+      toast({
+        title: 'Registration Successful',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom'
+      });
+      localStorage.setItem('userInfo', JSON.stringify(data));
+      setPicLoading(false);
+      navigate('/chats');
+    } catch (error) {
+      toast({
+        title: 'Error Occured!',
+        description: error.response.data.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+        position: 'bottom'
+      });
+      setPicLoading(false);
+    }
   };
 
   const handleClick = () => setShowPassword(!showPassword);
+
+  const postDetails = pics => {
+    setPicLoading(true);
+    if (pics === undefined) {
+      toast({
+        title: 'Choose an image',
+        status: 'warning',
+        duration: 4000,
+        isClosable: true,
+        position: 'top'
+      });
+      return;
+    }
+    console.log(pics);
+    if (pics.type === 'image/jpeg' || pics.type === 'image/png') {
+      const data = new FormData();
+      data.append('file', pics);
+      data.append('upload_preset', 'instant-messenger');
+      data.append('cloud_name', 'dtzxj2g2g');
+      fetch('https://api.cloudinary.com/v1_1/dtzxj2g2g/image/upload', {
+        method: 'post',
+        body: data
+      })
+        .then(res => res.json())
+        .then(data => {
+          setProfilePic(data.url.toString());
+          console.log(data.url.toString());
+          setPicLoading(false);
+        })
+        .catch(err => {
+          console.log(err);
+          setPicLoading(false);
+        });
+    } else {
+      toast({
+        title: 'Choose an image',
+        status: 'warning',
+        duration: 4000,
+        isClosable: true,
+        position: 'top'
+      });
+      setPicLoading(false);
+      return;
+    }
+  };
 
   return (
     <div>
@@ -74,7 +184,7 @@ function Register() {
             </div>
           </div>
           <div>
-            <label htmlFor="email" className="sr-only">
+            <label htmlFor="password" className="sr-only">
               Password
             </label>
 
@@ -168,11 +278,12 @@ function Register() {
                 type="file"
                 className="w-full p-4 pr-12 text-sm rounded-lg shadow-sm border-2 border-solid border-black cursor-pointer"
                 placeholder="Upload picture"
-                onChange={e => setProfilePic(e.target.files[0])}
+                onChange={e => postDetails(e.target.files[0])}
               />
             </div>
           </div>
         </form>
+
         <button
           className="flex mt-10 items-center justify-center px-8 py-4 font-bold transition bg-white border-4 border-black rounded-xl focus:outline-none focus:ring shadow-[6px_6px_0_0_#000] hover:shadow-none active:bg-pink-200"
           type="submit"
