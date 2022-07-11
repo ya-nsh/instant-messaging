@@ -10,8 +10,17 @@ import {
 import React from 'react';
 import Login from '../components/auth/Login';
 import Register from '../components/auth/Register';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export default function HomePage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+    if (userInfo) navigate('/chats');
+  }, [navigate]);
+
   return (
     <Container maxW="xl" centerContent>
       <div className="p-5 bg-white w-full mt-20 mb-4 border-solid border-2 border-black rounded-lg">
