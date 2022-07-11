@@ -33,6 +33,7 @@ const ChatProvider = ({ children }) => {
       }}
     >
       {children}
+      <div>{console.log('user --> ', user)}</div>
     </ChatContext.Provider>
   );
 };
