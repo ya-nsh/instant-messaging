@@ -2,6 +2,21 @@ const asyncHandler = require('express-async-handler');
 const createToken = require('../config/createToken');
 const User = require('../models/userModel');
 
+const allUsers = asyncHandler(async (req, res) => {
+  // extracting query params from the request like /api/user?search=john
+  const keyword = req.query.search
+    ? {
+        $or: [
+          { name: { $regex: req.query.search, $options: 'i' } },
+          { email: { $regex: req.query.search, $options: 'i' } }
+        ]
+      }
+    : {};
+
+  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } }); // exclude the current user from the list of users
+  res.send(users);
+});
+
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
 
@@ -64,4 +79,4 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, authUser };
+module.exports = { registerUser, authUser, allUsers };
