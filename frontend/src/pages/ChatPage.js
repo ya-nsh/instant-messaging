@@ -9,9 +9,9 @@ export default function ChatPage() {
   return (
     <div className="w-full">
       {user && <SideDrawer />}
-      <div className="flex justify-between w-full p-3">
-        {user && <MyChats />}
-        {user && <ChatBox />}
+      <div className="flex justify-between w-full p-3 h-[90vh]">
+        <div className="flex-[0.3] ">{user && <MyChats />}</div>
+        <div className="flex-[0.7]">{user && <ChatBox />}</div>
       </div>
     </div>
   );
