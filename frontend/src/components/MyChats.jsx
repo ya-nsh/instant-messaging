@@ -9,7 +9,7 @@ import ChatLoading from './ChatLoading';
 import { getSender } from '../config/ChatLogics';
 import GroupChatModal from './layout/GroupChatModal';
 
-function MyChats() {
+function MyChats({ fetchAgain }) {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
@@ -41,11 +41,11 @@ function MyChats() {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem('userInfo')));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   return (
     <div
-      className="bg-white shadow-md rounded-lg overflow-hidden border-2 border-black md:flex md:flex-col items-center m-4 p-4 h-[85vh]"
+      className="bg-white shadow-md rounded-lg overflow-hidden border-2 border-black md:flex md:flex-col items-center m-2 p-4 h-[85vh]"
       d={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
       w={{ base: '100%', md: '31%' }}
       borderRadius="lg"
