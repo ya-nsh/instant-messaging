@@ -11,7 +11,7 @@ function UserListItem({ user, handleFunction }) {
       cursor="pointer"
       bg="#E8E8E8"
       _hover={{
-        background: '#38B2AC',
+        background: 'black',
         color: 'white'
       }}
       w="100%"
@@ -19,7 +19,7 @@ function UserListItem({ user, handleFunction }) {
       alignItems="center"
       color="black"
       px={3}
-      py={2}
+      py={5}
       mb={2}
       borderRadius="lg"
     >

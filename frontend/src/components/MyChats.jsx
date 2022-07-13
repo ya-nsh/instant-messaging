@@ -7,6 +7,7 @@ import { useToast } from '@chakra-ui/toast';
 import axios from 'axios';
 import ChatLoading from './ChatLoading';
 import { getSender } from '../config/ChatLogics';
+import GroupChatModal from './layout/GroupChatModal';
 
 function MyChats() {
   const [loggedUser, setLoggedUser] = useState();
@@ -52,11 +53,11 @@ function MyChats() {
     >
       <div className="flex flex-col lg:flex-row w-full justify-between items-center pb-4 px-4">
         My Chats
-        {/* <GroupChatModal> */}
-        <Button d="flex" rightIcon={<AddIcon />}>
-          New Group Chat
-        </Button>
-        {/* </GroupChatModal> */}
+        <GroupChatModal>
+          <Button d="flex" rightIcon={<AddIcon />}>
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </div>
 
       <div className="flex flex-col bg-[#F8F8F8] w-full h-full rounded-md">
