@@ -6,6 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 const chatRoutes = require('./routes/chatRoutes');
 const messageRoutes = require('./routes/messageRoutes');
+const path = require('path');
 
 const app = express();
 app.use(express.json()); // for parsing application/json
@@ -27,6 +28,20 @@ app.get('/api/chat/:id', (req, res) => {
   const filteredChat = chats.filter(chat => chat._id === req.params.id);
   res.send(filteredChat);
 });
+
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname1, '/frontend/build')));
+
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname1, 'frontend', 'build', 'index.html'))
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running..');
+  });
+}
 
 const server = app.listen(port, console.log(`listening on port ${port}`));
 
