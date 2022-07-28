@@ -48,8 +48,6 @@ function MyChats({ fetchAgain }) {
       className="bg-white shadow-md rounded-lg overflow-hidden border-2 border-black md:flex md:flex-col items-center m-2 p-4 h-[85vh]"
       d={{ base: selectedChat ? 'none' : 'flex', md: 'flex' }}
       w={{ base: '100%', md: '31%' }}
-      borderRadius="lg"
-      borderWidth="1px"
     >
       <div className="flex flex-col lg:flex-row w-full justify-between items-center pb-4 px-4">
         My Chats
@@ -80,10 +78,10 @@ function MyChats({ fetchAgain }) {
                 </span>
                 {chat.latestMessage && (
                   <span fontSize="xs">
-                    <b>{chat.latestMessage.sender.name} : </b>
+                    {/* <b>{chat.latestMessage.sender.name} : </b>
                     {chat.latestMessage.content.length > 50
                       ? chat.latestMessage.content.substring(0, 51) + '...'
-                      : chat.latestMessage.content}
+                      : chat.latestMessage.content} */}
                   </span>
                 )}
               </div>
